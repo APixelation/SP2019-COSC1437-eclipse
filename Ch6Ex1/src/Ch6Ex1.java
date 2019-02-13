@@ -4,17 +4,21 @@ import java.awt.event.*;
 import java.util.*;
 
 public class Ch6Ex1 extends JFrame {
+	// Labels
+	private JLabel testScoreL, weightL;
 	
-	private JLabel testScoreL, weightL, calculatedAverageL;
+	// Text Fields
+	private JTextField testScoreTF, weightTF;
 	
-	private JTextField testScoreTF, weightTF, calculatedAverageTF;
-	
+	// Buttons
 	private JButton enterB, calculateB, exitB;
 	
+	// Handlers
 	private CalculateButtonHandler cbHandler;
 	private ExitButtonHandler ebHandler;
 	private EnterButtonHandler enbHandler;
 	
+	// Window Size
 	private static final int WIDTH = 400;
 	private static final int HEIGHT = 300;
 	
@@ -27,13 +31,11 @@ public class Ch6Ex1 extends JFrame {
 		// Labels
 		testScoreL = new JLabel("Enter a test score: ", SwingConstants.RIGHT);
 		weightL = new JLabel("Enter the score weight: ", SwingConstants.RIGHT);
-		calculatedAverageL = new JLabel("Average of Test Score(s): ", SwingConstants.RIGHT);
 
-		
+
 		// Text Fields
 		testScoreTF = new JTextField(1);
 		weightTF = new JTextField(1);
-		calculatedAverageTF = new JTextField(1);
 		
 		// Enter Button
 		enterB = new JButton("Enter Score");
@@ -58,15 +60,13 @@ public class Ch6Ex1 extends JFrame {
 		Container pane = getContentPane();
 
 		// Layout
-		pane.setLayout(new GridLayout(5, 3));
+		pane.setLayout(new GridLayout(4, 3));
 		
 		// Pane Components
 		pane.add(testScoreL);
 		pane.add(testScoreTF);
 		pane.add(weightL);
 		pane.add(weightTF);
-		pane.add(calculatedAverageL);
-		pane.add(calculatedAverageTF);
 		pane.add(enterB);
 		pane.add(calculateB);
 		pane.add(exitB);
@@ -85,8 +85,6 @@ public class Ch6Ex1 extends JFrame {
 			weightedValueList.add(Double.parseDouble(weightTF.getText()));
 			testScoreTF.setText("");
 			weightTF.setText("");
-			System.out.println("Current test scores: " + testScoresList);
-			System.out.println("Current weighted values: " + weightedValueList);
 		}
 	}
 	
@@ -95,14 +93,29 @@ public class Ch6Ex1 extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			int i, sizeOfList;
 			double weightedAverage = 0;
+			String outputMessage;
+			
 			i = 0;
 			sizeOfList = testScoresList.size();
+			
+			// Used for troubleshooting
+//			System.out.println("Current test scores: " + testScoresList);
+//			System.out.println("Current weighted values: " + weightedValueList);
 			
 			while (i < sizeOfList) {
 				weightedAverage += (testScoresList.get(i) * weightedValueList.get(i));
 				i++;
 			}
-			calculatedAverageTF.setText("" + weightedAverage);
+			
+			outputMessage = "Test scores: " + testScoresList + "\n" +
+							"Weighted Values: " + weightedValueList + "\n" +
+							"Weighted Average: " + weightedAverage;
+			
+			//Used for troubleshooting
+//			System.out.println("Total weighted Average: " + weightedAverage);
+//			calculatedAverageTF.setText("" + weightedAverage);
+			
+			JOptionPane.showMessageDialog(null, outputMessage, "Your Weighted Average", JOptionPane.INFORMATION_MESSAGE);
 			
 		}
 	}
