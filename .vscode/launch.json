@@ -1,0 +1,56 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Ch3Ex2<Ch3Ex2>",
+            "request": "launch",
+            "mainClass": "Ch3Ex2",
+            "projectName": "Ch3Ex2"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Ch3Ex4<Ch3Ex4>",
+            "request": "launch",
+            "mainClass": "Ch3Ex4",
+            "projectName": "Ch3Ex4"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Ch4_PrExercise4<Ch4_PrExercise4>",
+            "request": "launch",
+            "mainClass": "Ch4_PrExercise4",
+            "projectName": "Ch4_PrExercise4"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Ch5_PrExercise5<Ch5_PrExercise5>",
+            "request": "launch",
+            "mainClass": "Ch5_PrExercise5",
+            "projectName": "Ch5_PrExercise5"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Ch6Ex1<Ch6Ex1>",
+            "request": "launch",
+            "mainClass": "Ch6Ex1",
+            "projectName": "Ch6Ex1"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-HelloWorld<HelloWorld>",
+            "request": "launch",
+            "mainClass": "HelloWorld/net.codejava.HelloWorld",
+            "projectName": "HelloWorld"
+        }
+    ]
+}

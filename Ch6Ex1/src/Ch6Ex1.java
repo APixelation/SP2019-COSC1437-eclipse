@@ -27,12 +27,13 @@ public class Ch6Ex1 extends JFrame {
 		// Labels
 		testScoreL = new JLabel("Enter a test score: ", SwingConstants.RIGHT);
 		weightL = new JLabel("Enter the score weight: ", SwingConstants.RIGHT);
-		calculatedAverageL = new JLabel("Average Test Score: ", SwingConstants.RIGHT);
+		calculatedAverageL = new JLabel("Average of Test Score(s): ", SwingConstants.RIGHT);
+
 		
 		// Text Fields
-		testScoreTF = new JTextField(10);
-		weightTF = new JTextField(10);
-		calculatedAverageTF = new JTextField(10);
+		testScoreTF = new JTextField(1);
+		weightTF = new JTextField(1);
+		calculatedAverageTF = new JTextField(1);
 		
 		// Enter Button
 		enterB = new JButton("Enter Score");
@@ -55,9 +56,9 @@ public class Ch6Ex1 extends JFrame {
 		// Pane Container
 		
 		Container pane = getContentPane();
-		
+
 		// Layout
-		pane.setLayout(new GridLayout(3, 2));
+		pane.setLayout(new GridLayout(5, 3));
 		
 		// Pane Components
 		pane.add(testScoreL);
@@ -82,6 +83,10 @@ public class Ch6Ex1 extends JFrame {
 			
 			testScoresList.add(Integer.parseInt(testScoreTF.getText()));
 			weightedValueList.add(Double.parseDouble(weightTF.getText()));
+			testScoreTF.setText("");
+			weightTF.setText("");
+			System.out.println("Current test scores: " + testScoresList);
+			System.out.println("Current weighted values: " + weightedValueList);
 		}
 	}
 	
@@ -94,11 +99,10 @@ public class Ch6Ex1 extends JFrame {
 			sizeOfList = testScoresList.size();
 			
 			while (i < sizeOfList) {
-				weightedAverage += (testScoresList.indexOf(i) * weightedValueList.indexOf(i));
+				weightedAverage += (testScoresList.get(i) * weightedValueList.get(i));
 				i++;
 			}
-			
-			calculatedAverageTF.setText("The average of the test scores:" + weightedAverage);
+			calculatedAverageTF.setText("" + weightedAverage);
 			
 		}
 	}
