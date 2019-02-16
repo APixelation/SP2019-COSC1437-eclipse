@@ -11,11 +11,11 @@ public class Ch6Ex1 extends JFrame {
 	private JTextField testScoreTF, weightTF;
 	
 	// Buttons
-	private JButton enterB, calculateB, exitB;
+	private JButton enterB, calculateB; // exitB;
 	
 	// Handlers
 	private CalculateButtonHandler cbHandler;
-	private ExitButtonHandler ebHandler;
+//	private ExitButtonHandler ebHandler;
 	private EnterButtonHandler enbHandler;
 	
 	// Window Size
@@ -34,8 +34,8 @@ public class Ch6Ex1 extends JFrame {
 
 
 		// Text Fields
-		testScoreTF = new JTextField(1);
-		weightTF = new JTextField(1);
+		testScoreTF = new JTextField(5);
+		weightTF = new JTextField(5);
 		
 		// Enter Button
 		enterB = new JButton("Enter Score");
@@ -48,9 +48,9 @@ public class Ch6Ex1 extends JFrame {
 		calculateB.addActionListener(cbHandler);
 		
 		// Exit Button
-		exitB = new JButton("Exit");
-		ebHandler = new ExitButtonHandler();
-		exitB.addActionListener(ebHandler);
+//		exitB = new JButton("Exit");
+//		ebHandler = new ExitButtonHandler();
+//		exitB.addActionListener(ebHandler);
 		
 		// Title
 		setTitle("Weighted Average Calculator");
@@ -60,7 +60,7 @@ public class Ch6Ex1 extends JFrame {
 		Container pane = getContentPane();
 
 		// Layout
-		pane.setLayout(new GridLayout(4, 3));
+		pane.setLayout(new GridLayout(3, 3));
 		
 		// Pane Components
 		pane.add(testScoreL);
@@ -69,7 +69,7 @@ public class Ch6Ex1 extends JFrame {
 		pane.add(weightTF);
 		pane.add(enterB);
 		pane.add(calculateB);
-		pane.add(exitB);
+//		pane.add(exitB);
 		
 		// Window Size
 		setSize(WIDTH, HEIGHT);
@@ -120,16 +120,16 @@ public class Ch6Ex1 extends JFrame {
 		}
 	}
 	
-	private class ExitButtonHandler implements ActionListener {
-		
-		public void actionPerformed(ActionEvent e) {
-			
-			System.exit(0);
-		}
-	}
+//	private class ExitButtonHandler implements ActionListener {
+//		
+//		public void actionPerformed(ActionEvent e) {
+//			
+//			System.exit(0);
+//		}
+//	}
 	
 	public static void main(String[] args) {
-		Ch6Ex1 rectObject = new Ch6Ex1();
+		Ch6Ex1 calculator = new Ch6Ex1();
 		
 	}
 	
