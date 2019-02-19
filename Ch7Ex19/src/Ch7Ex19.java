@@ -64,13 +64,13 @@ public class Ch7Ex19 extends JFrame {
 	public Ch7Ex19() {
 		
 		// Create Information Area
-		informationTA = new JTextArea("\tMembership Cost: $500\n" 
-		+ "\tTraining Sessions Cost: $100 per session\n" 
+		informationTA = new JTextArea("\tMembership Cost: $500.\n" 
+		+ "\tTraining Sessions Cost: $100 per session.\n" 
 		+ "\t30% Senior discount off membership total.\n"
-		+ "\t15% military/veteran discount\n"
-		+ "\t20% discount per training session after the purchase of 5\n"
-		+ "\t15% full payment discount!\n"
-		+ "\t15% student discount\n", 7, 2);
+		+ "\t15% military/veteran discount.\n"
+		+ "\t20% discount per training session after the purchase of 5.\n"
+		+ "\t15% full payment discount.\n"
+		+ "\t15% student discount.\n", 7, 2);
 		
 		// Create GUI Labels
 		membershipLabel = new JLabel("Number of Months: ", SwingConstants.RIGHT);
