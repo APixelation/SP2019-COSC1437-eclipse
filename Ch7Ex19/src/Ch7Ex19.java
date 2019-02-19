@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.*;
 
 public class Ch7Ex19 extends JFrame {
@@ -20,6 +22,7 @@ public class Ch7Ex19 extends JFrame {
 	
 	// List Items for Drop Down Menu
 	String[] numOfMonths = { "1", "3", "6", "12", "18", "24" }; 
+	int discount_rate = 0;
 	
 	// Text Field for User # of Training Sessions
 	private JTextField trainingSessionTF;
@@ -36,7 +39,7 @@ public class Ch7Ex19 extends JFrame {
 	
 	// Location Constants
 	private static final int WINDOW_WIDTH = 500;
-	private static final int WINDOW_HEIGHT = 405;
+	private static final int WINDOW_HEIGHT = 407;
 	private static final int LABEL_WIDTH = 125;
 	private static final int LABEL_HEIGHT = 20;
 	private static final int BUTTON_WIDTH = (WINDOW_WIDTH / 2);
@@ -56,7 +59,7 @@ public class Ch7Ex19 extends JFrame {
 	private ExitButtonHandler ebHandler;
 	
 	// Item Listener
-//	private CheckBoxHandler chxboxHandler;
+	private CheckBoxHandler chxboxHandler;
 	
 	public Ch7Ex19() {
 		
@@ -64,7 +67,7 @@ public class Ch7Ex19 extends JFrame {
 		informationTA = new JTextArea("\tMembership Cost: $500\n" 
 		+ "\tTraining Sessions Cost: $100 per session\n" 
 		+ "\t30% Senior discount off membership total.\n"
-		+ "\t25% military/veteran discount\n"
+		+ "\t15% military/veteran discount\n"
 		+ "\t20% discount per training session after the purchase of 5\n"
 		+ "\t15% full payment discount!\n"
 		+ "\t15% student discount\n", 7, 2);
@@ -86,6 +89,13 @@ public class Ch7Ex19 extends JFrame {
 		militaryDiscountCB = new JCheckBox("Military");
 		fullPayDiscountCB = new JCheckBox("Full Pay");
 		
+		// Check Box Handler
+		chxboxHandler = new CheckBoxHandler();
+		seniorDiscountCB.addItemListener(chxboxHandler);
+		studentDiscountCB.addItemListener(chxboxHandler);
+		militaryDiscountCB.addItemListener(chxboxHandler);
+		fullPayDiscountCB.addItemListener(chxboxHandler);
+	
 		// Create Calculate Button
 		calculateB = new JButton("Estimate");
 		cbHandler = new CalculateButtonHandler();
@@ -161,6 +171,28 @@ public class Ch7Ex19 extends JFrame {
 	private class ExitButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			System.exit(0);
+		}
+	}
+	
+	private class CheckBoxHandler implements ItemListener {
+		public void itemStateChanged(ItemEvent e) {
+			
+			//Troubleshooting
+			//System.out.println(discount_rate);
+			if (e.getSource() == seniorDiscountCB) {
+				if (e.getStateChange() == ItemEvent.SELECTED)
+					discount_rate += 30;
+				if (e.getStateChange() == ItemEvent.DESELECTED)
+					discount_rate -= 30;
+			}
+			if (e.getSource() == studentDiscountCB || e.getSource() == militaryDiscountCB || e.getSource() == fullPayDiscountCB) {
+				if (e.getStateChange() == ItemEvent.SELECTED)
+					discount_rate += 15;
+				if (e.getStateChange() == ItemEvent.DESELECTED)
+					discount_rate -= 15;
+			}
+			// Troubleshooting
+			//System.out.println(discount_rate);
 		}
 	}
 	
