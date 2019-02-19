@@ -7,18 +7,15 @@ public class HelloWorld {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int sum = 0;
+		System.out.print("Enter a value: ");
 		int num = console.nextInt();
-		while (num != -1)
-		{
-			if (num >= 20)
-				sum = sum + num;
-			else
-				sum = sum - num;
-			num = console.nextInt();
-		}
 		
-		System.out.println(sum);
+		if (num > 0)
+			num = num + 13;
+		else
+			if (num >= 3)
+				num = num +15;
+		System.out.println(num);
 	}
-
+	
 }
