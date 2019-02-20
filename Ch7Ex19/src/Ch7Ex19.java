@@ -21,8 +21,15 @@ public class Ch7Ex19 extends JFrame {
 	private JComboBox membershipMonthsCB;
 	
 	// List Items for Drop Down Menu
-	String[] numOfMonths = { "1", "3", "6", "12", "18", "24" }; 
-	int discount_rate = 0;
+	String[] numOfMonths = { "1", "3", "6", "12", "18", "24" };
+	
+	// Prices
+	int discount_rate = 1;
+	int valueOfMonth = 1;
+	int valueOfTrainingSessions = 0;
+	private static final double MEMBERSHIP_COST = 500.00;
+	private static final double TRAINING_SESSION_COST = 100.00;
+	private static final double TRAINING_SESSION_DISCOUNT = .20;
 	
 	// Text Field for User # of Training Sessions
 	private JTextField trainingSessionTF;
@@ -58,8 +65,9 @@ public class Ch7Ex19 extends JFrame {
 	private CalculateButtonHandler cbHandler;
 	private ExitButtonHandler ebHandler;
 	
-	// Item Listener
+	// Item Listeners
 	private CheckBoxHandler chxboxHandler;
+	private ComboBoxHandler comboxHandler;
 	
 	public Ch7Ex19() {
 		
@@ -95,6 +103,11 @@ public class Ch7Ex19 extends JFrame {
 		studentDiscountCB.addItemListener(chxboxHandler);
 		militaryDiscountCB.addItemListener(chxboxHandler);
 		fullPayDiscountCB.addItemListener(chxboxHandler);
+		
+		// Combo Box Handler
+		comboxHandler = new ComboBoxHandler();
+		membershipMonthsCB.addItemListener(comboxHandler);
+		
 	
 		// Create Calculate Button
 		calculateB = new JButton("Estimate");
@@ -163,8 +176,18 @@ public class Ch7Ex19 extends JFrame {
 	
 	private class CalculateButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			double membershipCost, trainingSessionCost;
-			
+			double trainingSessionTotal;
+			String trainingSession = trainingSessionTF.getText();
+			valueOfTrainingSessions = Integer.parseInt(trainingSession);
+			if (valueOfTrainingSessions > 5) {
+				trainingSessionTotal = (TRAINING_SESSION_COST * 5);
+				for (valueOfTrainingSessions -= 5; valueOfTrainingSessions > 0; valueOfTrainingSessions--) {
+					trainingSessionTotal += (TRAINING_SESSION_COST - (TRAINING_SESSION_COST * TRAINING_SESSION_DISCOUNT));
+				}
+			}
+			else {
+				trainingSessionTotal = (TRAINING_SESSION_COST * valueOfTrainingSessions);
+			}
 		}
 	}
 	
@@ -181,18 +204,52 @@ public class Ch7Ex19 extends JFrame {
 			//System.out.println(discount_rate);
 			if (e.getSource() == seniorDiscountCB) {
 				if (e.getStateChange() == ItemEvent.SELECTED)
-					discount_rate += 30;
-				if (e.getStateChange() == ItemEvent.DESELECTED)
 					discount_rate -= 30;
+				if (e.getStateChange() == ItemEvent.DESELECTED)
+					discount_rate += 30;
 			}
 			if (e.getSource() == studentDiscountCB || e.getSource() == militaryDiscountCB || e.getSource() == fullPayDiscountCB) {
 				if (e.getStateChange() == ItemEvent.SELECTED)
-					discount_rate += 15;
-				if (e.getStateChange() == ItemEvent.DESELECTED)
 					discount_rate -= 15;
+				if (e.getStateChange() == ItemEvent.DESELECTED)
+					discount_rate += 15;
 			}
 			// Troubleshooting
 			//System.out.println(discount_rate);
+		}
+	}
+	
+	private class ComboBoxHandler implements ItemListener {
+		public void itemStateChanged(ItemEvent e) {
+			String currentMonth;
+			if (e.getSource() == membershipMonthsCB) {
+				currentMonth = numOfMonths[membershipMonthsCB.getSelectedIndex()];
+				
+				// Troubleshooting
+				//System.out.println(valueOfMonth);
+				
+				switch(currentMonth) {
+				case "3" :
+					valueOfMonth = 3;
+					break;
+				case "6" :
+					valueOfMonth = 6;
+					break;
+				case "12" :
+					valueOfMonth = 12;
+					break;
+				case "18" :
+					valueOfMonth = 18;
+					break;
+				case "24" :
+					valueOfMonth = 24;
+					break;
+				default :
+					valueOfMonth = 1;
+					break;
+				}
+			}
+			
 		}
 	}
 	
