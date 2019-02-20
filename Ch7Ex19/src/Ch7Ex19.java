@@ -24,12 +24,13 @@ public class Ch7Ex19 extends JFrame {
 	String[] numOfMonths = { "1", "3", "6", "12", "18", "24" };
 	
 	// Prices
-	int discount_rate = 1;
+	double discount_rate = 1.00;
+	double totalMembershipCost;
 	int valueOfMonth = 1;
 	int valueOfTrainingSessions = 0;
 	private static final double MEMBERSHIP_COST = 500.00;
 	private static final double TRAINING_SESSION_COST = 100.00;
-	private static final double TRAINING_SESSION_DISCOUNT = .20;
+	private static final double TRAINING_SESSION_DISCOUNT = .80;
 	
 	// Text Field for User # of Training Sessions
 	private JTextField trainingSessionTF;
@@ -87,6 +88,7 @@ public class Ch7Ex19 extends JFrame {
 		
 		// Create Text Fields
 		trainingSessionTF = new JTextField(3);
+		trainingSessionTF.setText("0");
 		
 		// Create Combo Box
 		membershipMonthsCB = new JComboBox(numOfMonths);
@@ -174,20 +176,34 @@ public class Ch7Ex19 extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
+	// Calculates the cost of the membership
 	private class CalculateButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			double trainingSessionTotal;
 			String trainingSession = trainingSessionTF.getText();
+			
+			// Converts the text in JTextField to an integer for calculations.
 			valueOfTrainingSessions = Integer.parseInt(trainingSession);
+			
+			// Training Sessions discount for greater than 5
 			if (valueOfTrainingSessions > 5) {
 				trainingSessionTotal = (TRAINING_SESSION_COST * 5);
+				
+				// This applies 20% discount per training session about 5 and not the cumulative total. 
 				for (valueOfTrainingSessions -= 5; valueOfTrainingSessions > 0; valueOfTrainingSessions--) {
-					trainingSessionTotal += (TRAINING_SESSION_COST - (TRAINING_SESSION_COST * TRAINING_SESSION_DISCOUNT));
+					trainingSessionTotal += (TRAINING_SESSION_COST * TRAINING_SESSION_DISCOUNT);
 				}
 			}
-			else {
+			
+			// For training sessions less than or equal to 5
+			else
 				trainingSessionTotal = (TRAINING_SESSION_COST * valueOfTrainingSessions);
-			}
+			
+			// Total membership cost calculations
+			totalMembershipCost = ((MEMBERSHIP_COST * valueOfMonth) + trainingSessionTotal) * discount_rate;
+			
+			// Outputs total in a pop up menu
+			JOptionPane.showMessageDialog(null, String.format("The total membership costs is: $%.2f", totalMembershipCost));
 		}
 	}
 	
@@ -202,23 +218,29 @@ public class Ch7Ex19 extends JFrame {
 			
 			//Troubleshooting
 			//System.out.println(discount_rate);
+			
+			// Senior Discount
 			if (e.getSource() == seniorDiscountCB) {
 				if (e.getStateChange() == ItemEvent.SELECTED)
-					discount_rate -= 30;
+					discount_rate -= .30;
 				if (e.getStateChange() == ItemEvent.DESELECTED)
-					discount_rate += 30;
+					discount_rate += .30;
 			}
+			
+			// Other discounts
 			if (e.getSource() == studentDiscountCB || e.getSource() == militaryDiscountCB || e.getSource() == fullPayDiscountCB) {
 				if (e.getStateChange() == ItemEvent.SELECTED)
-					discount_rate -= 15;
+					discount_rate -= .15;
 				if (e.getStateChange() == ItemEvent.DESELECTED)
-					discount_rate += 15;
+					discount_rate += .15;
 			}
+			
 			// Troubleshooting
 			//System.out.println(discount_rate);
 		}
 	}
 	
+	// Gets the value from the JComboBox
 	private class ComboBoxHandler implements ItemListener {
 		public void itemStateChanged(ItemEvent e) {
 			String currentMonth;
@@ -228,6 +250,7 @@ public class Ch7Ex19 extends JFrame {
 				// Troubleshooting
 				//System.out.println(valueOfMonth);
 				
+				// Switch assigns the integer equivalent to valueOfMonth
 				switch(currentMonth) {
 				case "3" :
 					valueOfMonth = 3;
