@@ -1,4 +1,7 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.*;
 import java.awt.List;
 import java.awt.event.ActionEvent;
@@ -24,16 +27,16 @@ public class Ch7Ex19 extends JFrame {
 	String[] numOfMonths = { "1", "3", "6", "12", "18", "24" };
 	
 	// Prices
-	double discount_rate = 1.00;
 	double totalMembershipCost;
+	int trainingSession;
 	int valueOfMonth = 1;
-	int valueOfTrainingSessions = 0;
+	double discount_rate = 1.00;
 	private static final double MEMBERSHIP_COST = 500.00;
 	private static final double TRAINING_SESSION_COST = 100.00;
 	private static final double TRAINING_SESSION_DISCOUNT = .80;
 	
 	// Text Field for User # of Training Sessions
-	private JTextField trainingSessionTF;
+	private JSpinner trainingSessionJS;
 	
 	// Check Box for Discounts
 	private JCheckBox seniorDiscountCB;
@@ -70,6 +73,9 @@ public class Ch7Ex19 extends JFrame {
 	private CheckBoxHandler chxboxHandler;
 	private ComboBoxHandler comboxHandler;
 	
+	// Change Listener
+	private JSpinnerHandler jspinHandler;
+	
 	public Ch7Ex19() {
 		
 		// Create Information Area
@@ -87,8 +93,14 @@ public class Ch7Ex19 extends JFrame {
 		discountLabel = new JLabel("Choose Discounts: ", SwingConstants.RIGHT);
 		
 		// Create Text Fields
-		trainingSessionTF = new JTextField(3);
-		trainingSessionTF.setText("0");
+//		trainingSessionTF = new JTextField(3);
+//		trainingSessionTF.setText("0");
+		
+		// Training Session Spinner Box
+		SpinnerModel value = new SpinnerNumberModel(0, 0, 100, 1);
+		trainingSessionJS = new JSpinner(value);
+		jspinHandler = new JSpinnerHandler();
+		trainingSessionJS.addChangeListener(jspinHandler);
 		
 		// Create Combo Box
 		membershipMonthsCB = new JComboBox(numOfMonths);
@@ -136,7 +148,7 @@ public class Ch7Ex19 extends JFrame {
 		calculateB.setLocation(0, ROW_5_HEIGHT);
 		exitB.setLocation((WINDOW_WIDTH / 2), ROW_5_HEIGHT);
 		membershipMonthsCB.setLocation(SELECTOR_MARGIN, ROW_2_HEIGHT);
-		trainingSessionTF.setLocation(SELECTOR_MARGIN, ROW_3_HEIGHT);
+		trainingSessionJS.setLocation(SELECTOR_MARGIN, ROW_3_HEIGHT);
 		seniorDiscountCB.setLocation((WINDOW_WIDTH / 2), (ROW_3_HEIGHT + 20));
 		studentDiscountCB.setLocation((WINDOW_WIDTH / 2) + 80, (ROW_3_HEIGHT + 20));
 		militaryDiscountCB.setLocation((WINDOW_WIDTH / 2), (ROW_3_HEIGHT + 60));
@@ -148,7 +160,7 @@ public class Ch7Ex19 extends JFrame {
 		trainingSessionLabel.setSize(LABEL_WIDTH, LABEL_HEIGHT);
 		discountLabel.setSize(LABEL_WIDTH, LABEL_HEIGHT);
 		membershipMonthsCB.setSize(SELECTOR_WIDTH, LABEL_HEIGHT);
-		trainingSessionTF.setSize(SELECTOR_WIDTH, LABEL_HEIGHT);
+		trainingSessionJS.setSize(SELECTOR_WIDTH, LABEL_HEIGHT);
 		seniorDiscountCB.setSize(CHECKBOX_WIDTH, CHECKBOX_HEIGHT);
 		studentDiscountCB.setSize(CHECKBOX_WIDTH, CHECKBOX_HEIGHT);
 		militaryDiscountCB.setSize(CHECKBOX_WIDTH, CHECKBOX_HEIGHT);
@@ -161,7 +173,7 @@ public class Ch7Ex19 extends JFrame {
 		pane.add(membershipLabel);
 		pane.add(membershipMonthsCB);
 		pane.add(trainingSessionLabel);
-		pane.add(trainingSessionTF);
+		pane.add(trainingSessionJS);
 		pane.add(discountLabel);
 		pane.add(seniorDiscountCB);
 		pane.add(studentDiscountCB);
@@ -180,24 +192,25 @@ public class Ch7Ex19 extends JFrame {
 	private class CalculateButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			double trainingSessionTotal;
-			String trainingSession = trainingSessionTF.getText();
-			
-			// Converts the text in JTextField to an integer for calculations.
-			valueOfTrainingSessions = Integer.parseInt(trainingSession);
 			
 			// Training Sessions discount for greater than 5
-			if (valueOfTrainingSessions > 5) {
+			if (trainingSession > 5) {
 				trainingSessionTotal = (TRAINING_SESSION_COST * 5);
 				
 				// This applies 20% discount per training session about 5 and not the cumulative total. 
-				for (valueOfTrainingSessions -= 5; valueOfTrainingSessions > 0; valueOfTrainingSessions--) {
+				for (trainingSession -= 5; trainingSession > 0; trainingSession--) {
 					trainingSessionTotal += (TRAINING_SESSION_COST * TRAINING_SESSION_DISCOUNT);
 				}
 			}
 			
 			// For training sessions less than or equal to 5
 			else
-				trainingSessionTotal = (TRAINING_SESSION_COST * valueOfTrainingSessions);
+				trainingSessionTotal = (TRAINING_SESSION_COST * trainingSession);
+			
+			// Sets JSpinner to current value
+			// There was a bug if user clicks calculate and then calculate again without changing the value
+			// This would be reset to 0, this corrects the issue.
+			trainingSession = trainingSession;
 			
 			// Total membership cost calculations
 			totalMembershipCost = ((MEMBERSHIP_COST * valueOfMonth) + trainingSessionTotal) * discount_rate;
@@ -213,6 +226,15 @@ public class Ch7Ex19 extends JFrame {
 		}
 	}
 	
+	// Training Session Data
+	private class JSpinnerHandler implements ChangeListener {
+		public void stateChanged(ChangeEvent e) {
+			trainingSession = (int) (((JSpinner) e.getSource()).getValue());
+		}
+		
+	}
+	
+	// Calculates Discount
 	private class CheckBoxHandler implements ItemListener {
 		public void itemStateChanged(ItemEvent e) {
 			
