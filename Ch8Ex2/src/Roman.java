@@ -1,15 +1,20 @@
+import java.util.*;
 
 public class Roman {
 	
-	private String romanNumber;
-	private int decimalNumber;
+	private static String romanNumeral;
+	private static int decimalNumber;
+	private static boolean convertRoman = true;
 	
 	public Roman() {
-		romanNumber = "";
+		romanNumeral = "";
 		decimalNumber = 0;
 	}
 	
-	public void convertRoman(String romNum) {
+	public static void romanToDecimal() {
+		String romNum;
+		System.out.print("Please enter a roman numeral: ");
+		romNum = console.next().toUpperCase();
 		for (int i = 0; i < romNum.length(); i++) {
 			char currentChar = romNum.charAt(i);
 			switch(currentChar) {
@@ -35,10 +40,45 @@ public class Roman {
 				decimalNumber += 1;
 				break;
 			default :
-				System.out.printf("%c is not a roman numeral.", currentChar);
-			}
-				
+				System.out.printf("%c is not a roman numeral.\n", currentChar);
+			}	
 		}
+		System.out.printf("The Roman Numeral %s is %d.\n", romNum, decimalNumber);
+	}
+	
+	public static void tryAgain() {
+		String answer = "";
+		System.out.print("Convert another roman numeral? Y/N");
+		answer = console.next().toUpperCase();
+		
+			if (answer.equals("Y")) {
+				return;
+			}
+			
+			else if (answer.equals("N")) {
+				System.out.println("Quitting...");
+				convertRoman = false;
+			}
+			
+			else {
+				System.out.println("Did not understand answer, quitting!");
+				convertRoman = false;
+			}
+			
+			
+		
+	}
+	
+	static Scanner console = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		
+		do {
+			romanToDecimal();
+			tryAgain();
+		}
+		
+		while(convertRoman);
 	}
 	
 }
