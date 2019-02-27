@@ -1,6 +1,7 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Day {
+	
 	final static int SUN = 0;
 	final static int MON = 1;
 	final static int TUE = 2;
@@ -21,6 +22,7 @@ public class Day {
 	
 	private static void returnNextDay() {
 		int thisDay = today; // Used so would not overwrite user's setDate. 
+		
 		if (thisDay == SAT)
 			System.out.println("The day after Saturday is Sunday.");
 		else {
@@ -32,6 +34,7 @@ public class Day {
 	
 	private static void returnPrevDay() {
 		int thisDay = today; // Used so would not overwrite user's setDate.
+		
 		if (thisDay == SUN)
 			System.out.println("The day before Sunday is Saturday");
 		else {
@@ -44,6 +47,7 @@ public class Day {
 	private static void calculateDay(int numOfDays) {
 		int thisDay = today; // Used so would not overwrite user's setDate;
 		thisDay += numOfDays % 7;
+		
 		if (numOfDays == 1 || numOfDays == -1) {
 			System.out.printf("%d day from %s is ", numOfDays, daySelect(today));
 			printDay(thisDay);
@@ -55,6 +59,7 @@ public class Day {
 	}
 	
 	private static String daySelect(int dayNumber) {
+		
 		String day = "";
 		
 		switch (dayNumber) {
@@ -98,19 +103,26 @@ public class Day {
 		return day;
 	}
 	
-	public static void main(String[] args) {
+	// Tests the program through all methods, day values and random day calculations.
+	private static void programTester() {
 		int i;
-		// Tests through all the days.
 		for (i = 0; i < 7; i++) {
 			int x;
 			setDay(i);
+			System.out.print("Today is ");
 			printDay(i);
 			returnPrevDay();
 			returnNextDay();
 			for (x = 0; x < 4; x++) {
 				int number = ThreadLocalRandom.current().nextInt(-365, 365 + 1);
 				calculateDay(number);
-				}
+			}
+			System.out.println();
 		}
+		
+	}
+	
+	public static void main(String[] args) {
+		programTester();
 	}
 }
