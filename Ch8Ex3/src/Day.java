@@ -1,3 +1,4 @@
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Day {
 	final static int SUN = 0;
@@ -99,17 +100,17 @@ public class Day {
 	
 	public static void main(String[] args) {
 		int i;
-		// Tests through the days.
+		// Tests through all the days.
 		for (i = 0; i < 7; i++) {
 			int x;
 			setDay(i);
 			printDay(i);
 			returnPrevDay();
 			returnNextDay();
-			for (x = 0; x > -365; x--)
-				calculateDay(x);
-			System.out.println();
+			for (x = 0; x < 4; x++) {
+				int number = ThreadLocalRandom.current().nextInt(-365, 365 + 1);
+				calculateDay(number);
+				}
 		}
 	}
-	
 }
