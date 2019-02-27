@@ -1,8 +1,8 @@
 import java.util.*;
 
 public class Day {
-	String name;
-	int dayNumber;
+	private String name;
+	private static int dayNumber;
 
 	Day(String n, int d) {
 		this.name = n;
@@ -17,59 +17,67 @@ public class Day {
 	private static Day fri = new Day("Friday", 6);
 	private static Day sat = new Day("Saturday", 7);
 	
+
 	void printDay() {
-		System.out.println("Today is " + this.name);
+		System.out.printf("Today is %s.\n", this.name);
 	}
 	
-	void daySelectSwitch(int num) {
+	void daySelect(int num) {
+		String day = "";
 		switch(num) {
 			case 0 : 
-				sat.returnDay();
+				day = sat.returnDay();
 				break;
 			case 1 : 
-				sun.returnDay();
+				day = sun.returnDay();
 				break;
 			case 2 : 
-				mon.returnDay();
+				day = mon.returnDay();
 				break;
 			case 3 : 
-				tue.returnDay();
+				 day = tue.returnDay();
 				break;
 			case 4 :
-				wed.returnDay();
+				day = wed.returnDay();
 				break;
 			case 5 :
-				thu.returnDay();
+				day = thu.returnDay();
 				break;
 			case 6 : 
-				fri.returnDay();
+				day = fri.returnDay();
 				break;
 			case 7 :
-				sat.returnDay();
+				day = sat.returnDay();
 				break;
 			case 8 :
-				sun.returnDay();
+				day = sun.returnDay();
 				break;
 			default :
 				System.out.printf("Switch error, this is num : %d.\n", num);
 		}
+		System.out.println(day + ".");
 	}
 	
 	String returnDay() {
 		return this.name;
 	}
 	
-	int returnPrevDay() {
+	void returnPrevDay() {
 		int prevDayNum = this.dayNumber - 1;
-		return prevDayNum;
+		System.out.printf("The day before %s is ", this.name);
+		daySelect(prevDayNum);
 	}
 	
-	int returnNextDay() {
+	void returnNextDay() {
 		int nextDayNum = this.dayNumber + 1;
-		return nextDayNum;
+		System.out.printf("The next day after %s is ", this.name);
+		daySelect(nextDayNum);
 	}
 	
 	
 	public static void main(String[] args) {
+		sat.printDay();
+		sat.returnNextDay();
+		sat.returnPrevDay();
 	}
 }
