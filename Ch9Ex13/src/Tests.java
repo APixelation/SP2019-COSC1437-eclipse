@@ -14,7 +14,8 @@ public class Tests {
 	static double[][] listOfGrades;
 	static String[] tableHeader;
 	
-	// Grade List for the purpose of testing*
+	// Grade List for the purpose of testing the program automatically.
+	// Comment out list if entering grades manually
 	static double[] studentGrades = {85, 83, 77, 91, 76, 80, 90, 95, 93, 48, 78, 81, 11, 90, 73, 92, 83, 30, 69, 87, 23, 45, 96, 38, 59, 60, 85, 45, 39, 67, 77, 31, 52, 74, 83, 93, 94, 89, 77, 97, 79, 85, 28, 93, 82, 85, 72, 49, 75, 63};
 	
 	public static void main(String[] args) {
@@ -33,11 +34,11 @@ public class Tests {
 		
 		// Required Functions
 		getClassSize();
+		// Set Number of Tests
 		numOfTests(5);
 		generateTableHeader();
 		generateGradeTwoDimList();
 		
-		// Set Number of Tests
 		// Input Grades
 		inputGrades();
 		
@@ -61,6 +62,7 @@ public class Tests {
 		return numOfTests;
 	}
 	
+	// Creates the two dim array for student grades
 	private static void generateGradeTwoDimList() {
 		listOfGrades = new double[sizeOfClass][numOfTests + 1];
 	}
@@ -83,30 +85,36 @@ public class Tests {
 				tableHeader[i] = "Test" + testNumber; 
 			}	
 		}
+		
 		// Test Header Generation
 		// System.out.println(Arrays.toString(tableHeader));
 	}
+	
+	// Input Grades, used with for loop to iterate through the number of tests per student.
 	private static void inputGrades() {
 		// Index required for automation testing, comment out if manually entering grades.
 		int index = 0;
-		
 		
 		for (int row = 0; row < sizeOfClass; row++) {
 			System.out.printf("%s, %s's ", studentFirstNames.get(row), studentLastNames.get(row));
 				for (int column = 0; column < numOfTests; column++) {
 					System.out.printf("%s: ", tableHeader[column + 2]);
 					
-					// Uncomment this to manually enter grades for each test per student.
+					// Uncomment below code to manually enter grades for each test per student.
+					
 					// double grade = console.nextDouble();
 					// listOfGrades[row][column] = grade;
+					
 					// End of manual code
 					
 					
 					// Below is automation of student grades for testing.
 					// Comment out if manually entering grades
+					
 					System.out.println(studentGrades[index]);
 					listOfGrades[row][column] = studentGrades[index];
 					index += 1;
+					
 					// End of automation code
 				}
 				System.out.println();
@@ -114,6 +122,7 @@ public class Tests {
 			
 		}
 	
+	// Calculates the row of the average test scores
 	private static void calculateAverageTestGrade() {
 		double sum = 0;
 		for (int column = 0; column < sizeOfClass; column ++) {
@@ -128,6 +137,7 @@ public class Tests {
 		}
 	}
 	
+	// Calculates grade letter for average
 	private static String calculateLetterGrade(double averageGrade) {
 		String letterGrade = "F";
 			if (averageGrade >= 90.00)
@@ -142,6 +152,7 @@ public class Tests {
 				return letterGrade;
 			return letterGrade;
 	}
+	
 	private static void printTable() {
 		System.out.println(Arrays.toString(tableHeader).replace("[", "| ").replace("]", " |").replace(",", " | "));
 		for (int index = 0; index < sizeOfClass; index++) {
