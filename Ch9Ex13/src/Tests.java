@@ -28,13 +28,18 @@ public class Tests {
 		setName("Sheila", "Sunny");
 		setName("Kiran", "Smith");
 		
-		// Test Class Size
-		System.out.println(getClassSize());
-		
-		// Set Number of Tests
+		// Required Functions
+		getClassSize();
 		numOfTests(5);
 		generateTableHeader();
 		generateGradeTwoDimList();
+		
+		// Set Number of Tests
+		// Input Grades
+		//inputGrades();
+		
+		// Generates Table
+		calculateAverageTestGrade();
 		printTable();
 	}
 	
@@ -54,7 +59,7 @@ public class Tests {
 	}
 	
 	private static void generateGradeTwoDimList() {
-		listOfGrades = new double[sizeOfClass][numOfTests];
+		listOfGrades = new double[sizeOfClass][numOfTests + 1];
 	}
 	
 	// Produces Header that can scale with number of tests inputed by user.
@@ -75,25 +80,52 @@ public class Tests {
 				tableHeader[i] = "Test" + testNumber; 
 			}	
 		}
+		// Test Header Generation
+		// System.out.println(Arrays.toString(tableHeader));
 	}
+	private static void inputGrades() {
+		for (int row = 0; row < sizeOfClass; row++) {
+			System.out.printf("%s, %s's", studentFirstNames.get(row), studentLastNames.get(row));
+				for (int column = 0; column < numOfTests; column++) {
+					System.out.printf(" %s: ", tableHeader[column + 2]);
+					double currentGrade = console.nextDouble();
+					listOfGrades[row][column] = currentGrade;
+				}
+			}
+			
+		}
 	
-	private static double calculateAverageTestGrade() {
+	private static void calculateAverageTestGrade() {
 		double sum = 0;
-		double average = 0;
 		for (int column = 0; column < sizeOfClass; column ++) {
 			for (int row = 0; row < numOfTests; row++) {
 				sum += listOfGrades[column][row];
 			}
+		// Inputs the average into the column
+		listOfGrades[column][numOfTests] = (sum / numOfTests);
 		}
-		average = sum / numOfTests;
-		return average;
 	}
 	
+	private static String calculateLetterGrade(double averageGrade) {
+		String letterGrade = "F";
+			if (averageGrade >= 90.00)
+				letterGrade = "A";
+			else if (averageGrade >= 80.00)
+				letterGrade = "B";
+			else if (averageGrade >= 70.00)
+				letterGrade = "C";
+			else if (averageGrade >= 60.00)
+				letterGrade = "D";
+			else
+				return letterGrade;
+			return letterGrade;
+	}
 	private static void printTable() {
 		System.out.println(Arrays.toString(tableHeader).replace("[", "| ").replace("]", " |").replace(",", " | "));
 		for (int index = 0; index < sizeOfClass; index++) {
 			System.out.print(studentFirstNames.get(index) + "\t\t\t" + studentLastNames.get(index) + "\t\t");
-			System.out.println(Arrays.toString(listOfGrades[index]).replace("[", "| ").replace("]", " |").replace(",", " | "));
+			System.out.print(Arrays.toString(listOfGrades[index]).replace("[", "| ").replace("]", " |").replace(",", " | "));
+			System.out.println("\t" + calculateLetterGrade(listOfGrades[index][numOfTests]));
 		}
 	}
 }
