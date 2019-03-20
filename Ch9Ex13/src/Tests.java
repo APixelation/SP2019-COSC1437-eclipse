@@ -14,6 +14,9 @@ public class Tests {
 	static double[][] listOfGrades;
 	static String[] tableHeader;
 	
+	// Grade List for the purpose of testing*
+	static double[] studentGrades = {85, 83, 77, 91, 76, 80, 90, 95, 93, 48, 78, 81, 11, 90, 73, 92, 83, 30, 69, 87, 23, 45, 96, 38, 59, 60, 85, 45, 39, 67, 77, 31, 52, 74, 83, 93, 94, 89, 77, 97, 79, 85, 28, 93, 82, 85, 72, 49, 75, 63};
+	
 	public static void main(String[] args) {
 		
 		// List of Students
@@ -36,7 +39,7 @@ public class Tests {
 		
 		// Set Number of Tests
 		// Input Grades
-		//inputGrades();
+		inputGrades();
 		
 		// Generates Table
 		calculateAverageTestGrade();
@@ -84,13 +87,29 @@ public class Tests {
 		// System.out.println(Arrays.toString(tableHeader));
 	}
 	private static void inputGrades() {
+		// Index required for automation testing, comment out if manually entering grades.
+		int index = 0;
+		
+		
 		for (int row = 0; row < sizeOfClass; row++) {
-			System.out.printf("%s, %s's", studentFirstNames.get(row), studentLastNames.get(row));
+			System.out.printf("%s, %s's ", studentFirstNames.get(row), studentLastNames.get(row));
 				for (int column = 0; column < numOfTests; column++) {
-					System.out.printf(" %s: ", tableHeader[column + 2]);
-					double currentGrade = console.nextDouble();
-					listOfGrades[row][column] = currentGrade;
+					System.out.printf("%s: ", tableHeader[column + 2]);
+					
+					// Uncomment this to manually enter grades for each test per student.
+					// double grade = console.nextDouble();
+					// listOfGrades[row][column] = grade;
+					// End of manual code
+					
+					
+					// Below is automation of student grades for testing.
+					// Comment out if manually entering grades
+					System.out.println(studentGrades[index]);
+					listOfGrades[row][column] = studentGrades[index];
+					index += 1;
+					// End of automation code
 				}
+				System.out.println();
 			}
 			
 		}
@@ -103,6 +122,9 @@ public class Tests {
 			}
 		// Inputs the average into the column
 		listOfGrades[column][numOfTests] = (sum / numOfTests);
+		
+		// Resets Sum to Zero
+		sum = 0;
 		}
 	}
 	
@@ -124,8 +146,8 @@ public class Tests {
 		System.out.println(Arrays.toString(tableHeader).replace("[", "| ").replace("]", " |").replace(",", " | "));
 		for (int index = 0; index < sizeOfClass; index++) {
 			System.out.print(studentFirstNames.get(index) + "\t\t\t" + studentLastNames.get(index) + "\t\t");
-			System.out.print(Arrays.toString(listOfGrades[index]).replace("[", "| ").replace("]", " |").replace(",", " | "));
-			System.out.println("\t" + calculateLetterGrade(listOfGrades[index][numOfTests]));
+			System.out.print(Arrays.toString(listOfGrades[index]).replace("[", " |  ").replace("]", " \t |").replace(",", "  | "));
+			System.out.println("    " + calculateLetterGrade(listOfGrades[index][numOfTests]) + "   |");
 		}
 	}
 }
