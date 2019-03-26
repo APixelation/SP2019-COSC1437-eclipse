@@ -2,7 +2,7 @@
 public class Point {
 	
 	// Instance Variables
-	public int x, y;
+	private int x, y;
 	
 	public Point() {
 		x = 0;
@@ -27,7 +27,7 @@ public class Point {
 		return y;
 	}
 	
-	public void printPoint() {
+	public void print() {
 		System.out.printf("(%d,%d)\n\n", x, y);
 	}
 }
