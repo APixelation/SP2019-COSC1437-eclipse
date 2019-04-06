@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class StarPattern {
 	
@@ -8,7 +8,7 @@ public class StarPattern {
 	public static boolean validNumber;
 	
 	public static void main(String[] args) {
-		
+		getNumber();
 		
 	}
 	
@@ -19,16 +19,20 @@ public class StarPattern {
 	
 	public static void getNumber() {
 		while (!validNumber) {
-			System.out.println("Please enter the number of stars: ");
+			System.out.print("Please enter the number of stars: ");
 			try {
 				argumentNumber = input.nextInt();
-			}
-			
-			catch (NumberFormatException e) {
+				if (argumentNumber > 0)
+					validNumber = true;
 				System.out.println("Please enter a non-negative integer.");
 			}
+			
+			catch (InputMismatchException e) {
+				System.out.println("Enter a whole non-negative integer without commas.");
+				input.next();
+			}
 		}
-
+			
 	}
 	
 	public static void descendingStar(int number) {
