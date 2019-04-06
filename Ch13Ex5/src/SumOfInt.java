@@ -5,26 +5,34 @@ public class SumOfInt {
 	public static Random rn = new Random();
 	public static int[] intArray;
 	public static int arrayLength, arrayNumber, i, sum;
+	public static final int MAX = 20;
+	public static final int MIN = 1;
 	
 	public static void main(String[] args) {
-		programTester();
+		for (int i = 0; i < 2; i++)
+			programTester();
 	}
 	
 	SumOfInt() {
+		sum = 0;
 	}
 	
+	// Test the program
 	public static void programTester() {
-		arrayLength = rn.nextInt(20);
-		System.out.println(arrayLength);
+		arrayLength = rn.nextInt(((MAX - MIN) + 1) + MIN);
+		System.out.println("The length of this array is: " + arrayLength);
 		arrayBuilder(arrayLength);
 		arrayContent();
-		arraySum(arrayLength);
-		
+		System.out.println("The sum of this array is: " + arraySum(arrayLength));
+		System.out.println();
 	}
+	
+	// Creates the length of the array
 	public static void arrayBuilder(int number) {
 		intArray = new int[number];
 	}
 	
+	// Fill the Array with Numbers
 	public static void arrayContent() {
 		int number = 0;
 		for (i = 0; i < intArray.length; i++) {
@@ -34,12 +42,12 @@ public class SumOfInt {
 		}
 	}
 	
+	// Recursive Sum Method
 	public static int arraySum(int number) {
-		if (number == 0)
+		if (number == 0 || number == -1)
 			return intArray[0];
-		
 		else {
-			sum += intArray[arraySum(number - 1)];
+			sum = intArray[number - 1] + arraySum(number - 2);
 			return sum;
 		}
 	}
