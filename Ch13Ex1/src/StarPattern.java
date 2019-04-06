@@ -8,8 +8,7 @@ public class StarPattern {
 	public static boolean validNumber;
 	
 	public static void main(String[] args) {
-		getNumber();
-		
+		starBuilder(getNumber());	
 	}
 	
 	StarPattern() {
@@ -17,14 +16,20 @@ public class StarPattern {
 		validNumber = false;
 	}
 	
-	public static void getNumber() {
+	// Gets and checks valid number
+	public static int getNumber() {
 		while (!validNumber) {
 			System.out.print("Please enter the number of stars: ");
 			try {
 				argumentNumber = input.nextInt();
 				if (argumentNumber > 0)
 					validNumber = true;
-				System.out.println("Please enter a non-negative integer.");
+				else if (argumentNumber == 0) {
+					System.out.println("Zero stars are printed.");
+					validNumber = true;
+				}
+				else
+					System.out.println("Please enter a non-negative integer.");
 			}
 			
 			catch (InputMismatchException e) {
@@ -32,29 +37,40 @@ public class StarPattern {
 				input.next();
 			}
 		}
-			
+		return argumentNumber;
 	}
 	
+	// Builds the entire star picture.
+	public static void starBuilder(int number) {
+		descendingStar(number);
+		ascendingStar(1);
+	}
+	
+	// Prints stars in descending order.
 	public static void descendingStar(int number) {
 		 if (number == 1)
 			 printStar(number);
 		 
 		 else {
-			 System.out.println("Else bracket, number is: " + number);
+			 // System.out.println("Else bracket, number is: " + number);
 			 printStar(number);
-			 System.out.println("Beginning recursion");
+			 // System.out.println("Beginning recursion");
 			 descendingStar(number - 1);
 		 }
 	}
 	
-	public static int ascendingStar(int number){
+	// Prints the stars in ascending order.
+	public static void ascendingStar(int number){
 		if (number == argumentNumber)
-			return number;
+			printStar(number);
 		
-		else
-			return ascendingStar(number +1);
+		else {
+			printStar(number);
+			ascendingStar(number + 1);
+		}
 	}
 
+	// Prints the stars for each row
 	public static void printStar(int number) {
 		for (int i = 0; i < number; i++)
 			System.out.print("*");
