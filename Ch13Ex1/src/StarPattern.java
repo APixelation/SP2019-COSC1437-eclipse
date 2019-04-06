@@ -27,6 +27,7 @@ public class StarPattern {
 				else if (argumentNumber == 0) {
 					System.out.println("Zero stars are printed.");
 					validNumber = true;
+					System.exit(0);
 				}
 				else
 					System.out.println("Please enter a non-negative integer.");
